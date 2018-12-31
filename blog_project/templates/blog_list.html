@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1 style="width:40%;padding:60;margin:auto">Blog List</h1>
+{%for i in blog_list%}
+    <img src="/media/{{i.img}}" width="auto" height="300"><br><br><br>
+    <h1><a href="/blog/blog/{{i.id}}">{{i.header}}</a></h1><br>
+    <a href="/blog/blog/{{i.id}}">Comments:{{i.comments.count}}</a><br>
+
+
+{%endfor%}
+<br><br>
+
+{%if topics%}
+Topics:
+  {%for topic in topics%}
+     <a href="/blog/topic/{{topic.id}}">{{topic.name}}</a>
+  {%endfor%}
+{%else%}
+   <p>no topics available</p>
+{%endif%}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if blog_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ blog_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ blog_list.number }} of {{ blog_list.paginator.num_pages }}.
+        </span>
+
+        {% if blog_list.has_next %}
+            <a href="?page={{ blog_list.next_page_number }}">next</a>
+            <a href="?page={{ blog_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+
+
+</body>
+</html>

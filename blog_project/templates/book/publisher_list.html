@@ -1,0 +1,10 @@
+{%extends "book/base.html"%}
+
+{%block content%}
+<h2>Publishers</h2>
+   <ul>
+       {%for publisher in object_list%}
+       <a href="/book/publisher/{{publisher.pk}}"><li> {{publisher.name}}</li></a>
+       {%endfor%}
+   </ul>
+{%endblock%}

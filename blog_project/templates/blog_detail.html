@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/blog/category">Go to blog</a>
+<h1>{{blog.header}}</h1>
+<img src="/media/{{blog.img}}" height=400 width=auto>
+<p>author:{{blog.author.username}} | pub_date:{{blog.pub_date}}</p><hr>
+<h3>{{blog.subheader}}</h3><br>
+<p>{{blog.details | safe}}
+<h2>write comment here:</h2>
+
+{% if request.user.is_authenticated %}
+<form action="" method="post" name="comment_form">{% csrf_token %}
+    <textarea type="textarea" name="text"></textarea>
+    <input type="submit" value="sumit">
+</form>
+
+{% else %}
+    <p> Login required - </p>
+{% endif %}
+
+<hr>
+{%for comment in comments%}
+   <div class="comment">
+       <div class="date">
+           {{comment.created_date}}
+           {%if not comment.approved_comment%}
+           <a href="/blog/comment/approve/{{comment.id}}">approve</a>
+           <a href="/blog/comment/remove/{{comment.id}}">remove</a>
+           {%endif%}
+       </div>
+
+       {% if comment.author %}
+            <p>{{ comment.author.username }}</p>
+       {% endif %}
+
+       <p>{{comment.text|linebreaks}}</p>
+   </div>
+
+{%endfor%}
+</body>
+</html>
